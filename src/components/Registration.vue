@@ -12,7 +12,7 @@
               label="Tank name"
               v-model="name"
             ></v-text-field>
-            <v-btn color="success" @click="onRegisterButton">Register</v-btn>
+            <v-btn color="success" @click="onRegisterButton">Join game</v-btn>
           </v-flex>
         </v-layout>
         </v-container>
