@@ -31,7 +31,9 @@ export default {
   methods: {
     onRegisterButton () {
       if(this.name) {
+        let registrationData = {name: this.name}
         this.$emit('registerName', this.name);
+        this.$mqtt.publish('test/nubg/join', JSON.stringify(registrationData))
       }
     }
   }

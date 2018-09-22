@@ -25,6 +25,14 @@ export default {
     Controller,
     Registration
   },
+  created: function (){
+    // this.$mqtt.subscribe('test/nubg/devgame/gamestate')
+  },
+  mqtt: {
+    'test/nubg/devgame/gamestate': function(message) {
+     console.log("received from mqtt: test/nubg/devgame/gamestate", message)
+    }
+  },
   data () {
     return {
       title: 'Nubg Web Controller',
@@ -34,6 +42,9 @@ export default {
   methods: {
     setName (name) {
       this.tankName = name;
+      let registrationData = {name: this.tankName}
+      
+      this.$mqtt.publish('test/nubg/join', JSON.stringify(registrationData))
     }
   }
 }
