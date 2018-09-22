@@ -9,7 +9,7 @@
         <Controller v-show="tankName"  v-bind:tankName="tankName"/>
       </v-content>
     </v-container>
-    <v-footer :fixed="fixed" app>
+    <v-footer app>
       <span>99bugs &copy; 2018</span>
     </v-footer>
   </v-app>
