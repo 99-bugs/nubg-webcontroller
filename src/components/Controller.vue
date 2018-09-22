@@ -6,7 +6,7 @@
       </v-layout>
       <v-layout row>
         <div id='controls'>
-          <button id='button-forward' data-down='forward' data-up='stop'>▲&#xFE0E;</button>
+          <button id='button-forward' data-down='forward' data-up='stop' @click="clickPub">▲&#xFE0E;</button>
           <button id='button-left' data-down='left' data-up='stop'>◀&#xFE0E;</button>
           <button id='button-right' data-down='right' data-up='stop'>▶&#xFE0E;</button>
           <button id='button-reverse' data-down='reverse' data-up='stop'>▼&#xFE0E;</button>
@@ -18,7 +18,12 @@
 
 <script>
 export default {
-  props: ['tankName']
+  props: ['tankName'],
+  methods: {
+    clickPub: function() {
+      this.$mqtt.publish('test/test/test', 'message')
+    }
+  }
 }
 </script>
 
