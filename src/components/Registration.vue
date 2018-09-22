@@ -4,7 +4,7 @@
       <v-toolbar>
         <v-toolbar-title>Tank registration</v-toolbar-title>
       </v-toolbar>
-      <v-from>
+      <v-form>
         <v-container>
         <v-layout row wrap>
           <v-flex xs12 sm6 offset-sm3>
@@ -16,7 +16,7 @@
           </v-flex>
         </v-layout>
         </v-container>
-      </v-from>
+      </v-form>
     </v-card>
   </v-slide-y-transition>
 </template>
