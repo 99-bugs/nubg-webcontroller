@@ -6,10 +6,10 @@
       </v-layout>
       <v-layout row>
         <div id='controls'>
-          <button id='button-forward' data-down='forward' data-up='stop' @click="clickPub">▲&#xFE0E;</button>
-          <button id='button-left' data-down='left' data-up='stop'>◀&#xFE0E;</button>
-          <button id='button-right' data-down='right' data-up='stop'>▶&#xFE0E;</button>
-          <button id='button-reverse' data-down='reverse' data-up='stop'>▼&#xFE0E;</button>
+          <button id='button-forward' data-down='forward' data-up='stop' @click="btnForward">▲&#xFE0E;</button>
+          <button id='button-left' data-down='left' data-up='stop' @click="btnLeft">◀&#xFE0E;</button>
+          <button id='button-right' data-down='right' data-up='stop' @click="btnRight">▶&#xFE0E;</button>
+          <button id='button-reverse' data-down='reverse' data-up='stop' @click="btnReverse">▼&#xFE0E;</button>
         </div>
       </v-layout>
     </v-container>
@@ -17,11 +17,48 @@
 </template>
 
 <script>
+
+let sha1 = require('sha1');
+let jwt = require('jsonwebtoken');
+
+const JWTSECRET = "484074319837639265922729358538";
+const GAMETOPIC = 'test/nubg/devgame/update';
+const DRIVESPEED = 10;
+const TURNSPEED = 360 / 8;
+const DEFAULTS = {drive: 0, turn: 0};
+
 export default {
   props: ['tankName'],
   methods: {
-    clickPub: function() {
-      this.$mqtt.publish('test/test/test', 'message')
+    btnForward: function(){
+     this.sendCommand({drive: DRIVESPEED});
+    },
+    btnReverse: function(){
+     this.sendCommand({drive: -DRIVESPEED});
+    },
+    btnLeft: function(){
+     this.sendCommand({turn: -TURNSPEED});
+    },
+    btnRight: function(){
+     this.sendCommand({turn: TURNSPEED});
+    },
+
+    sendCommand: function(command) {
+      let token = jwt.sign({
+        "tank_id": this.tankId,
+        "game_id": "devgame"
+      }, JWTSECRET);
+
+
+      command = Object.assign({}, DEFAULTS, command);
+      command.token = token;
+
+      this.$mqtt.publish(GAMETOPIC, JSON.stringify(command));
+    }
+  },
+  computed: {
+    tankId: function(){
+      return sha1(this.tankName)
     }
   }
 }

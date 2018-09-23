@@ -30,7 +30,7 @@ export default {
   },
   mqtt: {
     'test/nubg/devgame/gamestate': function(message) {
-     console.log("received from mqtt: test/nubg/devgame/gamestate", message)
+    //  console.log("received from mqtt: test/nubg/devgame/gamestate", message)
     }
   },
   data () {
